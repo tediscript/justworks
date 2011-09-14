@@ -1,6 +1,6 @@
-<h1>JustWorks PHP Framework</h1>
+JustWorks PHP Framework
 
-<p>JustWorks is a micro PHP framework. JustWorks handle the MVC part.</p>
+JustWorks is a micro PHP framework. JustWorks handle the MVC part.
 
 09/14/2011
 Feature:
@@ -27,8 +27,7 @@ redirect the url welcome/index to controller Welcome
         
     }
 
-    System importer will convert applictation.libraries.Curl into
-    application/libraries/Curl.php
+    System importer will convert applictation.libraries.Curl into application/libraries/Curl.php
     
     So the convention for library is class name should be same with file name.
     eg. Inside Curl.php
