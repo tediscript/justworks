@@ -1,5 +1,5 @@
-JustWorks PHP Framework
-=======================
+JustWorks PHP Micro Framework
+=============================
 
 JustWorks is a micro PHP framework. JustWorks handle the MVC part.
 
@@ -8,14 +8,24 @@ Feature:
 
 - Routing
     Location: application/config.php
+    
+    
+    
+    
     $config["routing"] = array(
         "welcome/index" => "Welcome"
     );
+
+
+
 
 redirect the url welcome/index to controller Welcome
 
 - Loading Libraries
     We can load the external library with Loader simply put this ono your controller
+
+
+
 
     System::import(application.libraries.Curl);
 
@@ -28,28 +38,48 @@ redirect the url welcome/index to controller Welcome
         
     }
 
+
+
+
     System importer will convert applictation.libraries.Curl into application/libraries/Curl.php
     
     So the convention for library is class name should be same with file name.
     eg. Inside Curl.php
+
+
+
     
     class Curl {
+
         public funciton __construct(){
         }
+
     }
+
+
+
      
     Or you can just autoload (include and create instance) of the library
     and add it to your controller class
+
+
+
     
     $config["autoload"] = array(
         "application.libraries.Curl"
     );
+
+
+
     
     System autoload will instantiate Curl class and add the instance into
     your controller.
     
-    The instance name is lcfirst() of the class name.
-    eg. If the class name Curl then the instance wilbe $curl;
+    The instance name is `lcfirst()` of the class name.
+    eg. If the class name `Curl` then the instance will be `$curl;`
+    
+    
+    
     
     class Welcome extends Controller {
 
@@ -58,5 +88,8 @@ redirect the url welcome/index to controller Welcome
         }
         
     }
+    
+    
+    
     
     
