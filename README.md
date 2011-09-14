@@ -19,7 +19,7 @@ Feature:
 
 
 
-redirect the url welcome/index to controller Welcome
+    redirect the url welcome/index to controller Welcome
 
 - Loading Libraries
     We can load the external library with Loader simply put this ono your controller
