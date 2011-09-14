@@ -1,0 +1,62 @@
+<h1>JustWorks PHP Framework</h1>
+
+<p>JustWorks is a micro PHP framework. JustWorks handle the MVC part.</p>
+
+09/14/2011
+Feature:
+
+- Routing
+    Location: application/config.php
+    $config["routing"] = array(
+        "welcome/index" => "Welcome"
+    );
+
+redirect the url welcome/index to controller Welcome
+
+- Loading Libraries
+    We can load the external library with Loader simply put this ono your controller
+
+    System::import(application.libraries.Curl);
+
+    class Welcome extends Controller {
+
+        public function __construct(){
+            $curl = new Curl();
+            echo $curl->get("http://google.com");
+        }
+        
+    }
+
+    System importer will convert applictation.libraries.Curl into
+    application/libraries/Curl.php
+    
+    So the convention for library is class name should be same with file name.
+    eg. Inside Curl.php
+    
+    class Curl {
+        public funciton __construct(){
+        }
+    }
+     
+    Or you can just autoload (include and create instance) of the library
+    and add it to your controller class
+    
+    $config["autoload"] = array(
+        "application.libraries.Curl"
+    );
+    
+    System autoload will instantiate Curl class and add the instance into
+    your controller.
+    
+    The instance name is lcfirst() of the class name.
+    eg. If the class name Curl then the instance wilbe $curl;
+    
+    class Welcome extends Controller {
+
+        public function __construct(){
+            echo $this->curl->get("http://google.com");
+        }
+        
+    }
+    
+    
