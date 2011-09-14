@@ -12,9 +12,9 @@ Feature:
     
     
     
-    $config["routing"] = array(
-        "welcome/index" => "Welcome"
-    );
+        $config["routing"] = array(
+            "welcome/index" => "Welcome"
+        );
 
 
 
@@ -27,16 +27,16 @@ redirect the url welcome/index to controller Welcome
 
 
 
-    System::import(application.libraries.Curl);
+        System::import(application.libraries.Curl);
 
-    class Welcome extends Controller {
+        class Welcome extends Controller {
 
-        public function __construct(){
-            $curl = new Curl();
-            echo $curl->get("http://google.com");
+            public function __construct(){
+                $curl = new Curl();
+                echo $curl->get("http://google.com");
+            }
+            
         }
-        
-    }
 
 
 
@@ -49,12 +49,12 @@ redirect the url welcome/index to controller Welcome
 
 
     
-    class Curl {
+        class Curl {
 
-        public funciton __construct(){
+            public funciton __construct(){
+            }
+
         }
-
-    }
 
 
 
@@ -65,9 +65,9 @@ redirect the url welcome/index to controller Welcome
 
 
     
-    $config["autoload"] = array(
-        "application.libraries.Curl"
-    );
+        $config["autoload"] = array(
+            "application.libraries.Curl"
+        );
 
 
 
@@ -81,13 +81,13 @@ redirect the url welcome/index to controller Welcome
     
     
     
-    class Welcome extends Controller {
+        class Welcome extends Controller {
 
-        public function __construct(){
-            echo $this->curl->get("http://google.com");
+            public function __construct(){
+                echo $this->curl->get("http://google.com");
+            }
+            
         }
-        
-    }
     
     
     
