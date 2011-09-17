@@ -4,9 +4,8 @@
 
 //route url patter into Controller
 $config["routing"] = array(
-    "profile/{username}/id/{userId}" => "Welcome",
-    "profile/admin" => "Admin",
-    "user/{config}" => "Config"
+    "profile/{username}/id/{userId}" => "Profile",
+    "profile/{username}/name/{name}" => "Name",
 );
 
 //auto load external libraries or models
