@@ -90,6 +90,23 @@ Feature:
         }
     
     
+    Update:
+    Now router can handle url with parameter
+    example:
+    
+        $config["routing"] = array(
+            "profile/{username}" => "Profile" 
+        );
+        
+    and the request uri is 
+        
+        profile/admin
+        
+    request will be routed to `Profile` controller and `admin' will be added to $_GET request.
+    You can get `username` in `Profile` with:
+    
+        echo $_GET["username"];
+        //output is admin 
     
     
     
