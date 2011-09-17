@@ -9,7 +9,8 @@ class System {
         
         require_once(self::$conf["application"] . "config/config.php");
         require_once(self::$conf["system"] . "Controller.php");
-        require_once(self::$conf["system"] . "URI.php");        
+        require_once(self::$conf["system"] . "URI.php");
+        require_once(self::$conf["system"] . "JustWorksString.php");       
         //get url
         $uri = new URI();
         $request_uri = $uri->filterUri($_SERVER['REQUEST_URI'], $config["application"]);
@@ -25,15 +26,65 @@ class System {
             }
         }
         $command = array_values($requestURI);
+        //print_r($command); exit();
         $filteredUri =  implode("/", $command);
         
-        //routing
+        //routing to controller
+        $controllerName = "";        
         if(empty($filteredUri)){
             $controllerName = $config["application"]["default_controller"];
-        } else if(array_key_exists($uri, $config["routing"])){
-            $controllerName = $config["routing"][$uri];
+        } else if(array_key_exists($filteredUri, $config["routing"])){
+            $controllerName = $config["routing"][$filteredUri];
         } else {
-            $controllerName = "";    
+            //route with parametric uri
+            $string = new JustWorksString();
+            $newRouting = array();
+            foreach($config["routing"] as $rk => $rv){
+                $arrk = explode("{", $rk);
+                ($string->endsWith("/", $arrk[0])) ? $kr = substr($arrk[0], 0, -1) : $kr = $arrk[0];
+                $newRouting[$kr] = $rv;
+            }
+            //sort from the longest keyRouting
+            $keyRouting = array();
+            foreach($newRouting as $nrk => $nrv){
+                $keyRouting[] = $nrk;
+            }
+            for($k=0; $k<sizeof($keyRouting); $k++){
+                for($l=0; $l<sizeof($keyRouting); $l++){
+                    if(strlen($keyRouting[$l]) < strlen($keyRouting[$k])){
+                        $krTemp = $keyRouting[$l];
+                        $keyRouting[$l] = $keyRouting[$k];
+                        $keyRouting[$k] = $krTemp;
+                    }
+                }
+            }
+            $sortedRouting = array();
+            $originalKeyArray = array();
+            $originalKey = "";
+            foreach($keyRouting as $nri){
+                if($string->startsWith($nri, $filteredUri)){
+                    $controllerName = $newRouting[$nri];
+                    $originalKeyArray = array_keys($config["routing"], $controllerName);
+                    $originalKey = $originalKeyArray[0];
+                    break;   
+                }
+            }
+            //convert uri to GET parameter
+            $arrKey = explode("/", $originalKey);
+            $resmap = array();
+            foreach($arrKey as $ar){
+                if($string->startsWith("{", $ar) && $string->endsWith("}", $ar)){
+                    $resmap[] = substr($ar, 1, -1);
+                } else {
+                    $resmap[] = "";
+                }
+            }
+            $arrVal = explode("/", $filteredUri);
+            for($m=0; $m<sizeof($resmap); $m++){
+                if($resmap[$m] != ""){
+                    isset($arrVal[$m]) ? $_GET[$resmap[$m]] = $arrVal[$m] : $_GET[$resmap[$m]] = "";
+                }
+            }
         }
         
         //initialize controller
