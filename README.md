@@ -103,7 +103,6 @@ Feature:
         profile/admin
         
     request will be routed to `Profile` controller and `admin` will be added to $_GET request.
-    You can get `username` in `Profile` with:
     
         echo $_GET["username"];
         //output is admin 
